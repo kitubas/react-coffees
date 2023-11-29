@@ -1,0 +1,52 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #eee;
+  padding: 30px;
+}
+
+.coldOrHotButton {
+  display: flex;
+  /* This will apply the flexbox model */
+  justify-content: center;
+  /* This will center the buttons horizontally */
+  align-items: center;
+  /* This will center the buttons vertically */
+  height: 100px;
+  /* Set the height of the div to ensure there's space for vertical centering */
+  gap: 1em;
+  margin: 1em;
+}
+
+.coldOrHotButton button {
+  font-size: 1em;
+  padding: 2em;
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 100ms ease-in-out;
+  border: #000;
+  border-style: solid;
+}
+
+.coldOrHotButton button:hover {
+  transform: scale(1.05);
+}
+
+#hotButton {
+background-color: red;
+}
+
+#icedButton {
+background-color: aqua;
+}
+
+.loadMoreCoffeesButton-container {
+  min-height: 100px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.searchCoffeeInput-container {
+margin: 2em;
+}
