@@ -1,4 +1,5 @@
-import './styles.css'
+import P from 'prop-types';
+import './styles.css';
 
 export const CoffeeCard = ({ coffee }) => (
   <div className="coffee">
@@ -9,3 +10,7 @@ export const CoffeeCard = ({ coffee }) => (
     </div>
   </div>
 );
+
+CoffeeCard.propTypes = {
+  coffee: P.object.isRequired,
+};

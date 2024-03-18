@@ -6,7 +6,7 @@ exports[`<SearchCoffeeInput /> should match snapshot 1`] = `
     class="search-coffee-input"
     placeholder="procure o café pelo nome"
     type="search"
-    value=""
+    value="um valor"
   />
 </div>
 `;
