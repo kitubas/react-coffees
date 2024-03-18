@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SearchCoffeeInput /> should match snapshot 1`] = `
+<div>
+  <input
+    class="search-coffee-input"
+    placeholder="procure o café pelo nome"
+    type="search"
+    value=""
+  />
+</div>
+`;
