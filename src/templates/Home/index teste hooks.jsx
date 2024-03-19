@@ -1,16 +1,16 @@
 import './styles.css';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { loadHotCoffees, loadIcedCoffees } from '../../utils/loadCoffees';
 import { Coffees } from '../../components/Coffees';
 import { LoadMoreCoffeesButton } from '../../components/LoadMoreCoffeesButton';
 import { SearchCoffeeInput } from '../../components/SearchCoffeeInput';
 
-export const Home = () => {
+export function Home() {
   const [coffees, setCoffees] = useState([]);
   const [theme, setTheme] = useState('hot');
   const [allCoffees, setAllCoffees] = useState([]);
   const [page, setPage] = useState(0);
-  const [coffeesPerPage, setCoffeesPerPage] = useState(2);
+  const [coffeesPerPage] = useState(2);
   const [searchValue, setSearchValue] = useState('');
 
   const setStateWithCoffees = useCallback(
@@ -19,7 +19,7 @@ export const Home = () => {
       setTheme(theme);
       setAllCoffees(coffees);
     },
-    [setCoffees, setTheme, setAllCoffees, page, coffeesPerPage],
+    [coffeesPerPage, page],
   );
 
   const handleLoadHotCoffees = useCallback(() => {
@@ -27,36 +27,31 @@ export const Home = () => {
     loadHotCoffees(setStateWithCoffees);
   }, [setStateWithCoffees]);
 
-  const handleLoadIcedCoffees = () => {
-    setPage(0);
-    loadIcedCoffees(setStateWithCoffees);
-  };
-
   useEffect(() => {
     handleLoadHotCoffees();
   }, [handleLoadHotCoffees]);
 
+  const handleLoadIcedCoffees = useCallback(() => {
+    setPage(0);
+    loadIcedCoffees(setStateWithCoffees);
+  }, [setStateWithCoffees]);
+
   const loadMoreCoffees = () => {
     const nextPage = page + coffeesPerPage;
     const nextPosts = allCoffees.slice(nextPage, nextPage + coffeesPerPage);
-    setCoffees([coffees, ...nextPosts]);
+    setCoffees((currentCoffees) => [...currentCoffees, ...nextPosts]);
     setPage(nextPage);
   };
 
   const handleSearchCoffeeInput = (e) => {
-    const { value } = e.target;
-    setSearchValue(value);
+    setSearchValue(e.target.value);
   };
 
   const containerStyle = theme === 'iced' ? { backgroundColor: 'lightblue' } : { backgroundColor: 'orange' };
-
   const noMorePosts = page + coffeesPerPage >= allCoffees.length;
 
   const filteredCoffees = searchValue
-    ? allCoffees.filter((coffee) => {
-        console.log(coffee);
-        return coffee.title.toLowerCase().includes(searchValue.toLowerCase());
-      })
+    ? allCoffees.filter((coffee) => coffee.title.toLowerCase().includes(searchValue.toLowerCase()))
     : coffees;
 
   return (
@@ -70,11 +65,10 @@ export const Home = () => {
         </button>
       </div>
       <div className="searchCoffeeInput-container">
-        {!!searchValue && <h1>Search value: {searchValue}</h1>}
+        {searchValue && <h1>Search value: {searchValue}</h1>}
         <SearchCoffeeInput searchValue={searchValue} handleSearchButtonChange={handleSearchCoffeeInput} />
       </div>
       {filteredCoffees.length > 0 && <Coffees coffees={filteredCoffees} />}
-
       {filteredCoffees.length === 0 && <p>Café não encontrado =(</p>}
       <div className="loadMoreCoffeesButton-container">
         {!searchValue && (
@@ -83,4 +77,4 @@ export const Home = () => {
       </div>
     </section>
   );
-};
+}
