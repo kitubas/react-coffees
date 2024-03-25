@@ -13,14 +13,11 @@ export function Home() {
   const [coffeesPerPage] = useState(2);
   const [searchValue, setSearchValue] = useState('');
 
-  const setStateWithCoffees = useCallback(
-    ({ coffees, theme }) => {
-      setCoffees(coffees.slice(page, coffeesPerPage));
-      setTheme(theme);
-      setAllCoffees(coffees);
-    },
-    [coffeesPerPage, page],
-  );
+  const setStateWithCoffees = ({ coffees, theme }) => {
+    setCoffees(coffees.slice(0, coffeesPerPage));
+    setTheme(theme);
+    setAllCoffees(coffees);
+  };
 
   const handleLoadHotCoffees = useCallback(() => {
     setPage(0);
@@ -29,7 +26,7 @@ export function Home() {
 
   useEffect(() => {
     handleLoadHotCoffees();
-  }, [handleLoadHotCoffees]);
+  });
 
   const handleLoadIcedCoffees = useCallback(() => {
     setPage(0);
